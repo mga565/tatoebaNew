@@ -1,0 +1,267 @@
+// modern-anki-card-template
+// Copyright (C) 2025 Tommy Yuichi Siek
+
+// This file is part of modern-anki-card-template.
+// Licensed under the AGPL-3.0 License.
+// See the LICENSE file in the project root for details.
+
+/* ===========================
+   Typography (Font Settings)
+=========================== */
+
+/* Define fonts globally, if needed later */
+.card {
+  font-family: var(--system-font-family);
+  line-height: var(--ios-line-height-body); /* Default */
+}
+
+#title,
+#subject {
+  font-family: var(--title-font-family);
+}
+
+#subject {
+  font-size: var(--ios-font-size-footnote); /* Default */
+  line-height: var(--ios-line-height-footnote); /* Default */
+}
+
+#title {
+  margin-top: 0px; /* remove the margin from top of page. */
+  margin-bottom: 0rem;
+  font-size: var(--ios-font-size-title2); /* Default */
+  line-height: var(--ios-line-height-title2); /* Default */
+}
+
+.flashcard-content {
+  font-size: var(--ios-font-size-body); /* Default */
+  line-height: var(--ios-line-height-body); /* Default */
+}
+
+.flashcard-metadata {
+  font-size: var(--ios-font-size-footnote); /* Default */
+  line-height: var(--ios-font-size-footnote); /* Default */
+}
+
+/* bold takes accent color */
+
+#flashcard-question:not(.seen) b,
+#flashcard-answer b,
+.cloze:not(:has(code)),
+#details b {
+  color: var(--label-font-color);
+}
+
+b,
+.cloze:not(:has(code)) {
+  font-weight: 600; /* semi bold */
+}
+
+.nightMode {
+  .seen {
+    color: var(--dark-mode-main-text-color);
+  }
+}
+
+/* link tags, underline for accessiblity */
+
+.card {
+  a {
+    color: var(--light-mode-footnote-text-color);
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    white-space: normal;
+    line-break: anywhere;
+  }
+
+  a:hover {
+    color: var(--light-mode-link-hover-color);
+    text-decoration: underline;
+  }
+
+  a:focus {
+    text-decoration: underline;
+    outline: var(--light-mode-link-focus-color);
+  }
+
+  &.nightMode {
+    a {
+      color: var(--dark-mode-link-text-color);
+    }
+
+    a:hover {
+      color: var(--dark-mode-link-hover-color);
+      text-decoration: underline;
+    }
+
+    a:focus {
+      text-decoration: underline;
+      outline: var(--dark-mode-link-focus-color);
+    }
+  }
+}
+
+#flashcard-extra-info p {
+  margin: 0;
+}
+
+.nightMode #details {
+  color: var(--dark-mode-details-text-color);
+}
+
+#details {
+  color: var(--light-mode-details-text-color);
+}
+
+#details-text {
+  display: inline;
+  text-align: left;
+}
+
+code {
+  font-family: var(--monospace-font-family);
+}
+
+#status-bar {
+  font-size: var(--mac-font-size-callout);
+  line-height: var(--mac-line-height-callout);
+}
+
+/* desktop typography */
+
+.mac body,
+.linux:not(.android) body,
+.win body {
+  font-family: var(--system-font-family);
+  line-height: var(--mac-line-height-body);
+}
+
+.mac #subject,
+.linux:not(.android) #subject,
+.win #subject {
+  font-size: var(--mac-font-size-footnote);
+  line-height: var(--mac-line-height-footnote);
+}
+
+.mac #title,
+.linux:not(.android) #title,
+.win #title {
+  font-size: var(--mac-font-size-title2);
+  line-height: var(--mac-line-height-title2);
+}
+
+.mac #flashcard-content,
+.linux:not(.android) #flashcard-content,
+.win #flashcard-content {
+  font-family: var(--system-font-family);
+  font-size: var(--mac-font-size-body);
+  line-height: var(--mac-line-height-body);
+}
+
+.mac .flashcard-metadata,
+.mac #controls-options,
+.mac #deck-name-container,
+.linux:not(.android) .flashcard-metadata,
+.linux:not(.android) #controls-options,
+.linux:not(.android) #deck-name-container,
+.win .flashcard-metadata,
+.win #controls-options,
+.win #deck-name-container {
+  font-size: var(--mac-font-size-footnote);
+  line-height: var(--mac-line-height-footnote);
+}
+
+/* Android specific typography styles */
+
+.android body {
+  /* Use the complete set of properties from the MD3 scale */
+  font: var(--md-typescale-body-medium-font);
+  font-size: var(--md-typescale-body-medium-size);
+  line-height: var(--md-typescale-body-medium-line-height);
+  font-weight: var(--md-typescale-body-medium-weight);
+  letter-spacing: var(--md-typescale-body-medium-tracking);
+  /* No need to set font-family again if it's already in --md-typescale-body-large-font */
+}
+
+.android #subject,
+.android #deck-name-container {
+  font: var(--md-typescale-label-medium-font);
+  font-size: var(--md-typescale-label-medium-size);
+  line-height: var(--md-typescale-label-medium-line-height);
+  font-weight: var(--md-typescale-label-medium-weight);
+  letter-spacing: var(--md-typescale-label-medium-tracking);
+}
+
+.android #title {
+  margin-top: 0px;
+  margin-bottom: 0rem; /*  Consider using consistent spacing (e.g., multiples of 8px) */
+  /* Use Headline Small - good for card titles */
+  font: var(--md-typescale-headline-small-font);
+  font-size: var(--md-typescale-headline-small-size);
+  line-height: var(--md-typescale-headline-small-line-height);
+  font-weight: var(--md-typescale-headline-small-weight);
+  letter-spacing: var(--md-typescale-headline-small-tracking);
+}
+
+.android .flashcard-metadata {
+  /* Use Label Small - appropriate for metadata */
+  font: var(--md-typescale-label-small-font);
+  font-size: var(--md-typescale-label-small-size);
+  line-height: var(--md-typescale-label-small-line-height);
+  font-weight: var(--md-typescale-label-small-weight);
+  letter-spacing: var(--md-typescale-label-small-tracking);
+}
+
+/* iphone, ipad typography */
+
+.iphone body,
+.ipad body {
+  font-family: var(--system-font-family);
+  font-size: var(--ios-font-size-body);
+  line-height: var(--ios-line-height-body);
+}
+
+.iphone #subject,
+.ipad #subject,
+.iphone #deck-name-container,
+.ipad #deck-name-container {
+  font-size: var(--ios-font-size-footnote);
+  line-height: var(--ios-line-height-footnote);
+}
+
+.iphone #title,
+.ipad #title {
+  font-family: var(--system-font-family); // Sf pro rounded doesn't work well.
+  margin-top: 0px;
+  margin-bottom: 0rem;
+  font-size: var(--ios-font-size-title2);
+  line-height: var(--ios-line-height-title2);
+}
+
+.iphone #flashcard-content,
+.ipad #flashcard-content {
+  font-size: var(--ios-font-size-body);
+  line-height: var(--ios-line-height-body);
+}
+
+.iphone .flashcard-metadata,
+.ipad .flashcard-metadata {
+  font-size: var(--ios-font-size-footnote);
+  line-height: var(--ios-line-height-footnote);
+}
+
+/* furigana */
+
+.mac ruby > rt {
+  font-size: var(--mac-font-size-furigana);
+  line-height: var(--mac-line-height-furigana);
+}
+
+.ios ruby > rt {
+  font-size: var(--ios-font-size-furigana);
+  line-height: var(--ios-line-height-furigana);
+}
+
+.android ruby > rt {
+  font-size: var(--android-font-size-furigana);
+  line-height: var(--android-line-height-furigana);
+}

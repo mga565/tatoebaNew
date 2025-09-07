@@ -1,0 +1,358 @@
+// modern-anki-card-template
+// Copyright (C) 2025 Tommy Yuichi Siek
+
+// This file is part of modern-anki-card-template.
+// Licensed under the AGPL-3.0 License.
+// See the LICENSE file in the project root for details.
+
+/* ===========================
+   CSS Variables (Root Styles)
+=========================== */
+
+:root.night-mode,
+:root {
+  --font-size: 16px;
+}
+
+:root {
+  --light-mode-main-bg-color: #f3f3f3;
+  --dark-mode-main-bg-color: #272626;
+  --light-mode-main-text-color: #333333;
+  --dark-mode-main-text-color: #d4d4d4; /* original: #ececec */
+  --light-mode-footnote-text-color: #666666;
+  --dark-mode-footnote-text-color: darkgrey;
+
+  --light-mode-empty-text-color: rgba(0, 0, 0, 0.25);
+  --dark-mode-empty-text-color: rgba(255, 255, 255, 0.25);
+
+  --light-mode-details-text-color: #666;
+  --dark-mode-details-text-color: darkgrey;
+  --light-mode-status-bar-color: rgba(0, 0, 0, 0.8);
+
+  --dark-mode-code-block-background: #0d1116;
+  --light-mode-code-block-background: #f9f9f9;
+  --light-mode-code-block-border: 1px solid #d1d1d1;
+  --dark-mode-code-block-border: 1px solid rgba(255, 255, 255, 0.2);
+
+  --light-mode-link-text-color: #666666;
+  --dark-mode-link-text-color: darkgrey;
+  --light-mode-link-hover-color: #1a73e8; // original: #d91e50
+  --dark-mode-link-hover-color: #8ab4f8;
+  --light-mode-link-focus-color: rgba(26, 115, 232, 0.3);
+  --dark-mode-link-focus-color: rgba(138, 180, 248, 0.3);
+
+  --dark-mode-status-bar-color: rgba(
+    255,
+    255,
+    255,
+    0.8
+  ); /* original: #49A2D5 */
+  --status-bar-accent-color: #49a2d5;
+
+  --title-font-family:
+    'SF Pro Rounded', 'Noto Sans Rounded', 'Roboto Rounded',
+    'Hiragino Maru Gothic ProN', Quicksand, Comfortaa, Manjari,
+    'Arial Rounded MT Bold', 'Arial Rounded MT', Calibri, 'Source Sans Pro',
+    sans-serif;
+
+  --ios-font-family:
+    'SF Pro Rounded', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+
+  --monospace-font-family:
+    'JetBrainsMono Nerd Font Mono', 'JetBrains Mono', 'Fira Code', 'Menlo',
+    'Consolas', 'Monaco', monospace;
+
+  --system-font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', system-iui, Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+  --jp-font-family:
+    'SF Pro JP', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP',
+    'Yu Gothic', 'Meiryo', sans-serif;
+
+  --android-font-family: 'Noto Sans JP', 'Noto', 'Roboto', sans-serif;
+
+  --label-font-color: #8e8e93; /* replace with JS depending on subject category */
+  --label-background-color: rgba(
+    44,
+    44,
+    46,
+    0.9
+  ); /* replace with JS depending on subject category */
+
+  --flag-color: rgba(255, 255, 255, 0.8);
+  --subject-flag-color: rgba(255, 255, 255, 0.8); /* set with JS */
+
+  --dark-mode-ios-link-color: #2997ff;
+
+  --flashcard-content-ideal-max-height: 417px;
+  --mac-flashcard-content-ideal-max-height: 478.467px;
+  --android-ideal-max-height: min(550px, 60vh);
+  --iphone-ideal-max-height: min(450px, 50vh);
+
+  /* pill button */
+
+  --pill-button-padding: 0.25em 1em;
+
+  /* iOS Typography Scale */
+  // --ios-font-size-title1: 2.125rem; /* 34px / 16 */
+  // --ios-line-height-title1: 2.5625rem; /* 41px / 16 */
+
+  // --ios-font-size-title2: 1.75rem; /* 28px / 16 */
+  // --ios-line-height-title2: 2.125rem; /* 34px / 16 */
+
+  // --ios-font-size-title3: 1.375rem; /* 22px / 16 */
+  // --ios-line-height-title3: 1.75rem; /* 28px / 16 */
+
+  // --ios-font-size-headline: 1.0625rem; /* 17px / 16 */
+  // --ios-line-height-headline: 1.375rem; /* 22px / 16 */
+
+  // --ios-font-size-body: 1.0625rem; /* 17px / 16 */
+  // --ios-line-height-body: 1.375rem; /* 22px / 16 */
+
+  // --ios-font-size-callout: 1rem; /* 16px / 16 */
+  // --ios-line-height-callout: 1.3125rem; /* 21px / 16 */
+
+  // --ios-font-size-subheadline: 0.9375rem; /* 15px / 16 */
+  // --ios-line-height-subheadline: 1.25rem; /* 20px / 16 */
+
+  // --ios-font-size-footnote: 0.8125rem; /* 13px / 16 */
+  // --ios-line-height-footnote: 1.125rem; /* 18px / 16 */
+
+  // --ios-font-size-caption1: 0.75rem; /* 12px / 16 */
+  // --ios-line-height-caption1: 1rem; /* 16px / 16 */
+
+  // --ios-font-size-caption2: 0.6875rem; /* 11px / 16 */
+  // --ios-line-height-caption2: 0.8125rem; /* 13px / 16 */
+
+  /* Refined iOS Typography Scale */
+  /* Title Sizes */
+  --ios-font-size-title1: 1.75rem; /* Large title */
+  --ios-line-height-title1: 2.125rem;
+
+  --ios-font-size-title2: 1.375rem; /* Medium title */
+  --ios-line-height-title2: 1.75rem;
+
+  --ios-font-size-title3: 1.25rem; /* Small title */
+  --ios-line-height-title3: 1.5rem;
+
+  /* Headline */
+  --ios-font-size-headline: 1rem; /* Primary text emphasis */
+  --ios-line-height-headline: 1.375rem;
+
+  /* Body Sizes */
+  --ios-font-size-body: 0.9375rem; /* Standard body text */
+  --ios-line-height-body: 1.25rem;
+
+  /* Callout */
+  --ios-font-size-callout: 0.875rem; /* Secondary information */
+  --ios-line-height-callout: 1.125rem;
+
+  /* Subheadline */
+  --ios-font-size-subheadline: 0.8125rem; /* Tertiary information */
+  --ios-line-height-subheadline: 1.125rem;
+
+  /* Footnote */
+  --ios-font-size-footnote: 0.75rem; /* Smallest standard text */
+  --ios-line-height-footnote: 1rem;
+
+  /* Caption Sizes */
+  --ios-font-size-caption1: 0.6875rem; /* Smallest caption */
+  --ios-line-height-caption1: 0.875rem;
+
+  --ios-font-size-caption2: 0.625rem; /* Extremely small caption */
+  --ios-line-height-caption2: 0.75rem;
+
+  /* macOS Typography Scale */
+
+  --mac-font-size-title1: 2rem; /* ~32px / 16 */
+  --mac-line-height-title1: 2.5rem; /* ~40px / 16 */
+
+  --mac-font-size-title2: 1.5rem; /* 24px / 16 */
+  --mac-line-height-title2: 2rem; /* 32px / 16 */
+
+  --mac-font-size-title3: 1.25rem; /* 20px / 16 */
+  --mac-line-height-title3: 1.75rem; /* 28px / 16 */
+
+  --mac-font-size-headline: 1.125rem; /* 18px / 16 */
+  --mac-line-height-headline: 1.5rem; /* 24px / 16 */
+
+  --mac-font-size-body: 1rem; /* 16px / 16 */
+  --mac-line-height-body: 1.625rem; /* 26px / 16 */
+
+  --mac-font-size-callout: 0.9375rem; /* 15px / 16 */
+  --mac-line-height-callout: 1.375rem; /* 22px / 16 */
+
+  --mac-font-size-subheadline: 0.875rem; /* 14px / 16 */
+  --mac-line-height-subheadline: 1.25rem; /* 20px / 16 */
+
+  --mac-font-size-footnote: 0.75rem; /* 12px / 16 */
+  --mac-line-height-footnote: 1.125rem; /* 18px / 16 */
+
+  --mac-font-size-caption1: 0.6875rem; /* 11px / 16 */
+  --mac-line-height-caption1: 1rem; /* 16px / 16 */
+
+  --mac-font-size-caption2: 0.625rem; /* 10px / 16 */
+  --mac-line-height-caption2: 0.875rem; /* 14px / 16 */
+
+  /* Adjusted Android Typography Scale (Pixel 7) */
+
+  /* --- Material Design 3 Typography --- */
+  /* Font: Roboto */
+  --md-ref-typeface-plain: 'Roboto', sans-serif;
+  --md-ref-typeface-brand:
+    'Roboto', sans-serif; /* Can be different for branding */
+
+  /* --- Display Styles (Large Text - Optional) --- */
+  --md-typescale-display-large-font: var(--md-ref-typeface-brand);
+  --md-typescale-display-large-size: 3.5625rem; /* 57px / 16 */
+  --md-typescale-display-large-line-height: 4rem; /* 64px / 16 */
+  --md-typescale-display-large-weight: 400;
+  --md-typescale-display-large-tracking: -0.015625em;
+
+  --md-typescale-display-medium-font: var(--md-ref-typeface-brand);
+  --md-typescale-display-medium-size: 2.8125rem; /* 45px / 16 */
+  --md-typescale-display-medium-line-height: 3.25rem; /* 52px / 16 */
+  --md-typescale-display-medium-weight: 400;
+  --md-typescale-display-medium-tracking: 0em;
+
+  --md-typescale-display-small-font: var(--md-ref-typeface-brand);
+  --md-typescale-display-small-size: 2.25rem; /* 36px / 16 */
+  --md-typescale-display-small-line-height: 2.75rem; /* 44px / 16 */
+  --md-typescale-display-small-weight: 400;
+  --md-typescale-display-small-tracking: 0em;
+
+  /* --- Headline Styles --- */
+  --md-typescale-headline-large-font: var(--md-ref-typeface-brand);
+  --md-typescale-headline-large-size: 2rem; /* 32px / 16 */
+  --md-typescale-headline-large-line-height: 2.5rem; /* 40px / 16 */
+  --md-typescale-headline-large-weight: 400;
+  --md-typescale-headline-large-tracking: 0em;
+
+  --md-typescale-headline-medium-font: var(--md-ref-typeface-brand);
+  --md-typescale-headline-medium-size: 1.75rem; /* 28px / 16 */
+  --md-typescale-headline-medium-line-height: 2.25rem; /* 36px / 16 */
+  --md-typescale-headline-medium-weight: 400;
+  --md-typescale-headline-medium-tracking: 0.009375em;
+
+  --md-typescale-headline-small-font: var(--md-ref-typeface-brand);
+  --md-typescale-headline-small-size: 1.5rem; /* 24px / 16 */
+  --md-typescale-headline-small-line-height: 2rem; /* 32px / 16 */
+  --md-typescale-headline-small-weight: 400;
+  --md-typescale-headline-small-tracking: 0.00625em;
+
+  /* --- Title Styles --- */
+  --md-typescale-title-large-font: var(--md-ref-typeface-brand);
+  --md-typescale-title-large-size: 1.375rem; /* 22px */
+  --md-typescale-title-large-line-height: 1.75rem; /* 28px */
+  --md-typescale-title-large-weight: 400;
+  --md-typescale-title-large-tracking: 0em;
+
+  --md-typescale-title-medium-font: var(--md-ref-typeface-plain);
+  --md-typescale-title-medium-size: 1rem; /* 16px */
+  --md-typescale-title-medium-line-height: 1.5rem; /* 24px */
+  --md-typescale-title-medium-weight: 500;
+  --md-typescale-title-medium-tracking: 0.009375em;
+
+  --md-typescale-title-small-font: var(--md-ref-typeface-plain);
+  --md-typescale-title-small-size: 0.875rem; /* 14px */
+  --md-typescale-title-small-line-height: 1.25rem; /* 20px */
+  --md-typescale-title-small-weight: 500;
+  --md-typescale-title-small-tracking: 0.00625em;
+
+  /* --- Body Styles --- */
+  --md-typescale-body-large-font: var(--md-ref-typeface-plain);
+  --md-typescale-body-large-size: 1rem; /* 16px / 16 */
+  --md-typescale-body-large-line-height: 1.5rem; /* 24px / 16 */
+  --md-typescale-body-large-weight: 400;
+  --md-typescale-body-large-tracking: 0.03125em;
+
+  --md-typescale-body-medium-font: var(--md-ref-typeface-plain);
+  --md-typescale-body-medium-size: 0.875rem; /* 14px / 16 */
+  --md-typescale-body-medium-line-height: 1.25rem; /* 20px / 16 */
+  --md-typescale-body-medium-weight: 400;
+  --md-typescale-body-medium-tracking: 0.015625em;
+
+  --md-typescale-body-small-font: var(--md-ref-typeface-plain);
+  --md-typescale-body-small-size: 0.75rem; /* 12px / 16 */
+  --md-typescale-body-small-line-height: 1rem; /* 16px / 16 */
+  --md-typescale-body-small-weight: 400;
+  --md-typescale-body-small-tracking: 0.025em;
+
+  /* --- Label Styles --- */
+  --md-typescale-label-large-font: var(--md-ref-typeface-plain);
+  --md-typescale-label-large-size: 0.875rem; /* 14px */
+  --md-typescale-label-large-line-height: 1.25rem; /* 20px */
+  --md-typescale-label-large-weight: 500;
+  --md-typescale-label-large-tracking: 0.00625em;
+
+  --md-typescale-label-medium-font: var(--md-ref-typeface-plain);
+  --md-typescale-label-medium-size: 0.75rem; /* 12px */
+  --md-typescale-label-medium-line-height: 1rem; /* 16px */
+  --md-typescale-label-medium-weight: 500;
+  --md-typescale-label-medium-tracking: 0.03125em;
+
+  --md-typescale-label-small-font: var(--md-ref-typeface-plain);
+  --md-typescale-label-small-size: 0.6875rem; /* 11px */
+  --md-typescale-label-small-line-height: 1rem; /* 16px */
+  --md-typescale-label-small-weight: 500;
+  --md-typescale-label-small-tracking: 0.03125em;
+
+  /* furigana */
+
+  --mac-font-size-furigana: 0.625rem; /* ~10px */
+  --mac-line-height-furigana: 0.75rem; /* ~12px */
+
+  --ios-font-size-furigana: 0.6875rem; /* ~11px */
+  --ios-line-height-furigana: 0.8125rem; /* ~13px */
+
+  --android-font-size-furigana: 0.6875rem; /* ~11px */
+  --android-line-height-furigana: 0.8125rem; /* ~13px */
+
+  /* macOS Code Typography Scale */
+  --mac-code-font-family:
+    ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas,
+    'DejaVu Sans Mono', monospace;
+
+  --mac-code-font-size-large: 1rem; /* ~16px / 16 For larger blocks, headings */
+  --mac-code-line-height-large: 1.5rem; /* ~24px / 16 */
+
+  --mac-code-font-size-medium: 0.875rem; /* ~14px / 16 For most inline code, smaller blocks */
+  --mac-code-line-height-medium: 1.25rem; /* ~20px / 16 */
+
+  --mac-code-font-size-small: 0.75rem; /* ~12px / 16 For small inline snippets, metadata, etc. */
+  --mac-code-line-height-small: 1rem; /* ~16px / 16 */
+
+  /* iOS Code Typography Scale */
+  --ios-code-font-family:
+    'SF Mono', ui-monospace, Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+
+  --ios-code-font-size-large: 1rem; /* ~16px / 16 For larger blocks, headings */
+  --ios-code-line-height-large: 1.5rem; /* ~24px / 16 */
+
+  --ios-code-font-size-medium: 0.875rem; /* ~14px / 16 For most inline code, smaller blocks */
+  --ios-code-line-height-medium: 1.25rem; /* ~20px / 16 */
+
+  --ios-code-font-size-small: 0.75rem; /* ~12px / 16 For small inline snippets, metadata, etc. */
+  --ios-code-line-height-small: 1rem; /* ~16px / 16 */
+
+  /* Android Code Typography Scale */
+  --android-code-font-family:
+    'Roboto Mono', 'Cascadia Code', 'Source Code Pro', 'DejaVu Sans Mono',
+    monospace;
+
+  --android-code-font-size-large: 1rem; /* ~16px / 16 For larger blocks, headings */
+  --android-code-line-height-large: 1.5rem; /* ~24px / 16 */
+
+  --android-code-font-size-medium: 0.875rem; /* ~14px / 16 For most inline code, smaller blocks */
+  --android-code-line-height-medium: 1.25rem; /* ~20px / 16 */
+
+  --android-code-font-size-small: 0.75rem; /* ~12px / 16 For small inline snippets, metadata, etc. */
+  --android-code-line-height-small: 1rem; /* ~16px / 16 */
+
+  --app-width: 478.47px;
+  /* take into account button padding, left and right sides */
+  --status-bar-width: calc(478.47px + (0.25em * 2));
+  --status-bar-mobile-width: calc(90vw + (0.25em * 2));
+}

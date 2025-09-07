@@ -1,0 +1,74 @@
+// modern-anki-card-template
+// Copyright (C) 2025 Tommy Yuichi Siek
+
+// This file is part of modern-anki-card-template.
+// Licensed under the AGPL-3.0 License.
+// See the LICENSE file in the project root for details.
+
+:root {
+  /* iOS Light & Dark Mode Color Variables */
+  --ios-light-background: #f7f7f7;
+  --ios-flashcard-background-light: #ffffff;
+  --ios-box-shadow-light: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  // use desktop styling
+  --ios-dark-mode-bg: linear-gradient(to bottom, #242424, #1e1e1e);
+  --ios-dark-mode-box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.2);
+  --ios-dark-mode-border: 1px solid rgba(255, 255, 255, 0.08);
+
+  --ios-border-radius: 12px;
+}
+
+.iphone,
+.ipad {
+  #flashcard-question,
+  #flashcard-answer,
+  #source-text {
+    text-align: left;
+  }
+}
+
+/* deck metadata is not supported for ios */
+.iphone #flashcard-deck-info,
+.ipad #flashcard-deck-info {
+  display: none;
+}
+
+.iphone,
+.ipad {
+  .card {
+    color: var(--light-mode-main-text-color);
+    font-family: var(--system-font-family);
+    background: var(--ios-light-background);
+
+    #flashcard-content {
+      max-height: var(--iphone-ideal-max-height);
+      background: var(--ios-flashcard-background-light);
+      box-shadow: var(--ios-box-shadow-light);
+      border-radius: var(--ios-border-radius);
+    }
+
+    #flashcard-container {
+      padding: 0 0.5em; // iphone sides too cramped.
+    }
+
+    #flashcard-textbox {
+      padding: 1.35rem 1.75rem;
+    }
+
+    &.nightMode {
+      color: var(--dark-mode-main-text-color);
+      background: var(--dark-mode-main-bg-color);
+
+      #flashcard-content {
+        box-shadow: var(--ios-dark-mode-box-shadow);
+        border: var(--ios-dark-mode-border);
+        background: var(--ios-dark-mode-bg);
+      }
+
+      a {
+        color: var(--dark-mode-link-accent-color);
+      }
+    }
+  }
+}

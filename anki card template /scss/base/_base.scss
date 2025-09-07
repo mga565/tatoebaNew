@@ -1,0 +1,33 @@
+// modern-anki-card-template
+// Copyright (C) 2025 Tommy Yuichi Siek
+
+// This file is part of modern-anki-card-template.
+// Licensed under the AGPL-3.0 License.
+// See the LICENSE file in the project root for details.
+
+/* ===========================
+   Base Styles (Global Settings)
+=========================== */
+
+html,
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-smooth: always;
+}
+
+/* Apply background color to body before content */
+.nightMode {
+  &.card::before,
+  &.card {
+    background: var(--dark-mode-main-bg-color);
+    color: var(--dark-mode-main-text-color); /* base text color */
+  }
+}
+
+.card::before,
+.card {
+  background: var(--light-mode-main-bg-color);
+  color: var(--light-mode-main-text-color);
+}

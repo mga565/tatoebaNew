@@ -1,0 +1,454 @@
+// modern-anki-card-template
+// Copyright (C) 2025 Tommy Yuichi Siek
+
+// This file is part of modern-anki-card-template.
+// Licensed under the AGPL-3.0 License.
+// See the LICENSE file in the project root for details.
+
+/* ===========================
+   Status Bar Component
+=========================== */
+
+:root {
+  --light-mode-dropdown-item-bg: #fafafa;
+  --light-mode-dropdown-item-bg-hover: #eaeaea;
+  --dark-mode-dropdown-item-bg: #1a1a1a;
+  --dark-mode-dropdown-item-bg-hover: #1f1f1f;
+  --dropdown-item-text-color: #555;
+  --dropdown-menu-border-radius: 9px;
+  --light-mode-dropdown-menu-border: 1px solid rgba(0, 0, 0, 0.08);
+  --dark-mode-dropdown-menu-border: 1px solid rgba(255, 255, 255, 0.1);
+
+  --light-mode-active-button-circle-color: #ff8800;
+  --dark-mode-active-button-circle-color: #ff9f45;
+
+  // Flagged States
+  // colors synced with "fontColor" in _labelColors.json,
+  // to do: completely decouple flag states from subject, making it optional
+
+  --dark-mode-flag-red: #ff6161;
+  --light-mode-flag-red: #d9534f;
+  --dark-mode-flag-blue: #57c1ff;
+  --light-mode-flag-blue: #2a6bbf;
+  --dark-mode-flag-green: #59d499;
+  --light-mode-flag-green: #2f9e5b;
+  --dark-mode-flag-orange: #ff9f0b;
+  --light-mode-flag-orange: #d9781e;
+  --dark-mode-flag-pink: #ff86b5;
+  --light-mode-flag-pink: #d94e7f;
+  --dark-mode-flag-turquoise: #40e0d0;
+  --light-mode-flag-turquoise: #259c96;
+  --dark-mode-flag-purple: #b19cd9;
+  --light-mode-flag-purple: #7a5edc;
+  --dark-mode-flag-default: #cccccc;
+  --light-mode-flag-default: #666666;
+}
+
+.nightMode {
+  #status-bar {
+    color: var(--dark-mode-status-bar-color);
+  }
+}
+
+#status-bar {
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+  color: var(--light-mode-status-bar-color);
+}
+
+#status-bar li {
+  list-style: none;
+}
+
+/* status buttons */
+
+/* align the icon and text */
+#undo-button,
+#flag-button {
+  justify-content: center;
+  display: flex;
+  height: fit-content;
+  flex-flow: nowrap;
+  // padding: 0.25em 0.4em 0.25em 0.4em;
+  box-sizing: border-box;
+  gap: 0.5625em;
+}
+
+/* Note, Undo doesn't use this button style, as it creates misalignment, and they serve two different actions.*/
+
+/* Modern style buttons */
+#flag-button-container {
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background-color 0.15s ease;
+}
+
+.nightMode {
+  #flag-button-container:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+  }
+}
+
+#flag-button-container:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+#flag-button {
+  padding-right: 0; /* remove the padding, just for flag. */
+}
+
+#flag-button,
+#undo-button {
+  align-items: center;
+}
+
+#flag-icon,
+#undo-icon {
+  display: flex;
+  justify-content: center;
+}
+
+.nightMode {
+  #undo-button path {
+    fill: var(--dark-mode-status-bar-color);
+  }
+}
+
+#undo-button path {
+  fill: var(--light-mode-status-bar-color);
+}
+
+/* 
+#flag-button path {
+  fill: var(--flag-color);
+}
+*/
+
+/* General Flag Button Styling */
+#flag-button {
+  cursor: pointer;
+}
+
+/* Default (Unflagged) State */
+.nightMode {
+  #flag-button:not(.flagged) #flag-icon path {
+    fill: var(--dark-mode-status-bar-color);
+  }
+}
+
+#flag-button:not(.flagged) #flag-icon path {
+  fill: var(--light-mode-status-bar-color);
+}
+
+.nightMode {
+  #flag-button #dropdown-menu .flag-yellow path,
+  #flag-button.flag-yellow #flag-icon path,
+  #flag-button.flag-yellow:hover #flag-icon path {
+    fill: var(--dark-mode-flag-yellow);
+  }
+
+  #flag-button #dropdown-menu .flag-red path,
+  #flag-button.flag-red #flag-icon path,
+  #flag-button.flag-red:hover #flag-icon path {
+    fill: var(--dark-mode-flag-red);
+  }
+
+  #flag-button #dropdown-menu .flag-blue path,
+  #flag-button.flag-blue #flag-icon path,
+  #flag-button.flag-blue:hover #flag-icon path {
+    fill: var(--dark-mode-flag-blue);
+  }
+
+  #flag-button #dropdown-menu .flag-green path,
+  #flag-button.flag-green #flag-icon path,
+  #flag-button.flag-green:hover #flag-icon path {
+    fill: var(--dark-mode-flag-green);
+  }
+
+  #flag-button #dropdown-menu .flag-orange path,
+  #flag-button.flag-orange #flag-icon path,
+  #flag-button.flag-orange:hover #flag-icon path {
+    fill: var(--dark-mode-flag-orange);
+  }
+
+  #flag-button #dropdown-menu .flag-pink path,
+  #flag-button.flag-pink #flag-icon path,
+  #flag-button.flag-pink:hover #flag-icon path {
+    fill: var(--dark-mode-flag-pink);
+  }
+
+  #flag-button #dropdown-menu .flag-turquoise path,
+  #flag-button.flag-turquoise #flag-icon path,
+  #flag-button.flag-turquoise:hover #flag-icon path {
+    fill: var(--dark-mode-flag-turquoise);
+  }
+
+  #flag-button #dropdown-menu .flag-purple path,
+  #flag-button.flag-purple #flag-icon path,
+  #flag-button.flag-purple:hover #flag-icon path {
+    fill: var(--dark-mode-flag-purple);
+  }
+
+  #flag-button #dropdown-menu .flag-default path,
+  #flag-button.flag-default #flag-icon path,
+  #flag-button.flag-default:hover #flag-icon path {
+    fill: var(--dark-mode-flag-default);
+  }
+}
+
+/* light mode flags */
+#flag-button #dropdown-menu .flag-yellow path,
+#flag-button.flag-yellow #flag-icon path {
+  fill: var(--light-mode-flag-yellow);
+}
+
+#flag-button #dropdown-menu .flag-red path,
+#flag-button.flag-red #flag-icon path {
+  fill: var(--light-mode-flag-red);
+}
+
+#flag-button #dropdown-menu .flag-blue path,
+#flag-button.flag-blue #flag-icon path {
+  fill: var(--light-mode-flag-blue);
+}
+
+#flag-button #dropdown-menu .flag-green path,
+#flag-button.flag-green #flag-icon path {
+  fill: var(--light-mode-flag-green);
+}
+
+#flag-button #dropdown-menu .flag-orange path,
+#flag-button.flag-orange #flag-icon path {
+  fill: var(--light-mode-flag-orange);
+}
+
+#flag-button #dropdown-menu .flag-pink path,
+#flag-button.flag-pink #flag-icon path {
+  fill: var(--light-mode-flag-pink);
+}
+
+#flag-button #dropdown-menu .flag-turquoise path,
+#flag-button.flag-turquoise #flag-icon path {
+  fill: var(--light-mode-flag-turquoise);
+}
+
+#flag-button #dropdown-menu .flag-purple path,
+#flag-button.flag-purple #flag-icon path {
+  fill: var(--light-mode-flag-purple);
+}
+
+#flag-button #dropdown-menu .flag-default path,
+#flag-button.flag-default #flag-icon path {
+  fill: var(--light-mode-flag-default);
+}
+
+/* button hover styling */
+#flag-button:hover,
+#undo-button:hover {
+  border-radius: 5px;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+#undo-button:hover {
+  color: var(--label-font-color);
+}
+
+#undo-button:hover path {
+  fill: var(--label-font-color);
+}
+
+#status-bar-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  padding: 0;
+}
+
+/* not supported for mobile */
+.android #status-bar-buttons,
+.iphone #status-bar-buttons,
+.ipad #status-bar-buttons {
+  display: none;
+}
+
+#flag-button {
+  flex-flow: column;
+}
+
+.flag-dropdown-icon svg {
+  width: 1.5em;
+  height: 1.5em;
+}
+
+#flag-button-container {
+  display: flex;
+  gap: 0.5625em;
+  align-items: center; // align icon and text
+  align-self: end;
+}
+
+#dropdown-menu {
+  display: flex;
+  flex-flow: column;
+  visibility: hidden;
+  position: relative;
+  // box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  border: var(--light-mode-dropdown-menu-border);
+  border-radius: var(--dropdown-menu-border-radius);
+  min-width: 160px;
+  z-index: 1;
+  padding: 0;
+  list-style-type: none;
+
+  // animation
+  opacity: 0;
+  transform: translateY(-10px) scale(0.95);
+  pointer-events: none;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+#dropdown-menu.show {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+/* Add "active" circle when Flag drop down menu appears. */
+#flag-button:has(.show) #flag-button-container::after {
+  content: '';
+  position: relative;
+  width: 6px;
+  height: 6px;
+  background-color: var(--light-mode-active-button-circle-color);
+  border-radius: 50%;
+}
+
+#dropdown-menu .dropdown-item {
+  display: flex;
+  padding: 0.25em;
+  margin: 0;
+  border: none;
+  background: none;
+  text-align: left;
+  max-width: 100%;
+  background: var(--light-mode-dropdown-item-bg);
+}
+
+#dropdown-menu .dropdown-item:hover {
+  border: none;
+}
+
+/* Show the dropdown menu when hovering over the parent */
+// #flag-button:hover #dropdown-menu {
+//   display: flex;
+//   flex-flow: column;
+// }
+
+#dropdown-menu .dropdown-button {
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0.75em;
+  margin: 0;
+  border: none;
+  border-radius: var(--dropdown-menu-border-radius);
+  background: var(--light-mode-dropdown-item-bg);
+  box-shadow: none;
+}
+
+#dropdown-menu .dropdown-button:hover {
+  background: var(--light-mode-dropdown-item-bg-hover);
+}
+
+.dropdown-item:first-child,
+.dropdown-item:first-child button {
+  border-radius: var(--dropdown-menu-border-radius)
+    var(--dropdown-menu-border-radius) 0 0;
+}
+
+.dropdown-item:last-child,
+.dropdown-item:last-child button {
+  border-radius: 0 0 var(--dropdown-menu-border-radius)
+    var(--dropdown-menu-border-radius);
+}
+
+#dropdown-menu #flag-text-container {
+  display: flex;
+  gap: 0.75em;
+  align-items: center;
+}
+
+// TO DO: light mode
+// #flag-button:has(.show) {
+//   color: white;
+// }
+
+// #flag-button:not(.flagged):has(.show) #flag-icon path {
+//   fill: white;
+// }
+
+.nightMode {
+  #flag-button:has(.show) {
+    color: white;
+  }
+
+  #flag-button:not(.flagged):has(.show) #flag-icon path {
+    fill: white;
+  }
+
+  #flag-button:has(.show) #flag-button-container::after {
+    background-color: var(--dark-mode-active-button-circle-color);
+  }
+
+  #dropdown-menu {
+    border: var(--dark-mode-dropdown-menu-border);
+
+    .dropdown-item {
+      background: var(--dark-mode-dropdown-item-bg);
+    }
+
+    .dropdown-button {
+      background: var(--dark-mode-dropdown-item-bg);
+      border: none;
+    }
+
+    .dropdown-button:hover {
+      background: var(--dark-mode-dropdown-item-bg-hover);
+      border-radius: var(--dropdown-menu-border-radius);
+    }
+
+    .dropdown-text {
+      color: var(--dark-mode-main-text-color);
+    }
+
+    .dropdown-control {
+      color: #d9d9d9;
+      border: none;
+    }
+  }
+}
+
+#dropdown-menu .dropdown-text {
+  color: var(--dropdown-item-text-color);
+}
+
+/* These are control icons for hotkeys, but-- hotkey modification doesn't work with JS (must use Python) */
+#dropdown-menu .dropdown-control {
+  padding: 0.5em;
+  border-radius: 5px;
+  font-size: 0.9em;
+  color: #909090;
+  border: 1px solid #dedede;
+}
+
+#dropdown-menu .dropdown-control {
+  // CMD / CTRL + flag number does not work, disabling for now
+  display: none;
+}

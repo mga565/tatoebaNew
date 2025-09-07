@@ -1,0 +1,131 @@
+// prefers-color-scheme is fixed on Desktop starting Qt 6.8 release, whenever
+// that is
+// /* use github theming for highlight.js */
+// @import url('_github.min.css') screen and (prefers-color-scheme: light);
+// @import url('_github-dark.min.css') screen and (prefers-color-scheme: dark);
+
+/* ===========================
+   Code Component
+=========================== */
+
+:root {
+  --code-block-border-radius: 6px;
+}
+
+/* layout */
+pre code {
+  max-width: 100%;
+  display: block;
+  overflow-x: auto;
+  padding: 1em;
+  white-space: pre; // this overrides code (which is just inline code).
+}
+
+pre {
+  flex-basis: 100%; // always make code blocks take up a whole line / row
+  max-width: 100%;
+}
+
+code {
+  white-space: nowrap; // don't wrap inline code for visibility; if too long, use pre, code blocks
+}
+
+/* code typography */
+code {
+  font-family: var(--monospace-font-family);
+}
+
+.mac,
+.win,
+.linux:not(.android) {
+  code,
+  code.hljs {
+    font-size: var(--mac-code-font-size-medium);
+  }
+
+  pre code,
+  pre code.hljs {
+    font-size: var(--mac-code-font-size-small);
+  }
+}
+
+// inline code doesn't have enough breathing room on mobile devices.
+
+.mobile :not(pre) code {
+  line-height: 2.15rem;
+}
+
+// revisit ipad styles later
+.iphone,
+.ipad {
+  code,
+  code.hljs {
+    font-size: var(--ios-code-font-size-medium);
+  }
+
+  pre code,
+  pre code.hljs {
+    font-size: var(--ios-code-font-size-small);
+  }
+}
+
+.android {
+  code,
+  code.hljs {
+    font-size: var(--android-code-font-size-medium);
+  }
+
+  pre code,
+  pre code.hljs {
+    font-size: var(--android-code-font-size-small);
+  }
+}
+
+code.hljs {
+  border-radius: var(--code-block-border-radius);
+}
+
+/* default theme */
+
+/* does not override hljs themes */
+.nightMode {
+  pre:has(:not(.hljs)) {
+    background-color: var(--dark-mode-code-block-background);
+    border: var(--dark-mode-code-block-border);
+  }
+}
+
+/* light mode default theme */
+pre:has(:not(.hljs)) {
+  background-color: var(--light-mode-code-block-background);
+  border: var(--light-mode-code-block-border);
+  border-radius: var(--code-block-border-radius);
+}
+
+.nightMode {
+  code:not(.hljs) {
+    background: var(--dark-mode-code-block-background);
+    border: none;
+    // color: #c9d1d9; optional.
+  }
+
+  // inline code.
+  code:not(.hljs):not(pre code) {
+    border: var(--dark-mode-code-block-border);
+    border-radius: var(--code-block-border-radius);
+  }
+}
+
+// inline code.
+code:not(.hljs):not(pre code) {
+  background-color: var(--light-mode-code-block-background);
+  border: var(--light-mode-code-block-border);
+  border-radius: var(--code-block-border-radius);
+  padding: 3px 5px;
+}
+
+// disabled until prefers-color-scheme is fixed on Anki Desktop.
+// /* (github) light theme is missing a border. */
+// body:not(.nightMode) code.hljs {
+//   border: 1px solid var(--light-mode-code-block-border);
+// }

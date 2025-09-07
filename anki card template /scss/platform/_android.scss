@@ -1,0 +1,104 @@
+// modern-anki-card-template
+// Copyright (C) 2025 Tommy Yuichi Siek
+
+// This file is part of modern-anki-card-template.
+// Licensed under the AGPL-3.0 License.
+// See the LICENSE file in the project root for details.
+
+:root {
+  /* android material 3 theming */
+
+  --android-light-background: #fcfcfc; // original: #f3f3f3
+  --android-dark-background: #1a1c1e;
+
+  --android-flashcard-background-light: #fefefe; // original: #f1f1f1;
+  --android-flashcard-background-dark: #242629;
+
+  --android-box-shadow-light: 0px 1px 3px 1px rgba(0, 0, 0, 0.15); // original: 0 8px 10px rgba(0, 0, 0, 0.1);
+  --android-box-shadow-dark: 0 8px 0 #1f2124;
+
+  --android-alt-dark-bg-color: #0f0f0f;
+  --android-alt-dark-surface-color: linear-gradient(
+    to bottom,
+    #1d1d1d,
+    #181818
+  );
+}
+
+/* android layout, based on Pixel 7 testing */
+
+.android #main {
+  height: calc(100vh);
+  justify-content: center;
+}
+
+.android #status-bar,
+.android #status-bar-buttons {
+  max-height: 1.5rem;
+}
+
+.android #flashcard-content {
+  height: 100vh !important;
+}
+
+.android #status-bar {
+  height: calc(15vh);
+}
+
+/* android renders background to a different color. either fix the background color, or set a new pair:
+
+Backdrop Background: #303030
+Flashcard Background: #353535
+
+*/
+
+// .android #flashcard-content {
+//   background: #353535;
+// }
+
+.android {
+  body.card {
+    background: var(--android-light-background);
+  }
+
+  #flashcard-content {
+    max-height: var(--android-ideal-max-height);
+    background: var(--android-flashcard-background-light);
+    box-shadow: var(--android-box-shadow-light);
+  }
+
+  #flashcard-textbox {
+    padding: 1.35rem 1.75rem;
+  }
+
+  #title {
+    font-weight: 500; // material design titles
+  }
+
+  #answer-icon {
+    margin: 0; // fix misalignment.
+  }
+
+  .nightMode {
+    // .card is on the same body tag as .nightMode
+    &.card {
+      background: var(--android-dark-background);
+      // test
+      background: var(--android-alt-dark-bg-color);
+    }
+
+    #flashcard-content {
+      background: var(--android-flashcard-background-dark);
+      box-shadow: var(--android-box-shadow-dark);
+
+      // test
+      background: var(--android-alt-dark-surface-color);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+      // background: linear-gradient(135deg, #161618, #1c1c1e);
+      // box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
+      border-radius: 12px;
+      // border: 1px solid #2c2c2c;
+    }
+  }
+}
