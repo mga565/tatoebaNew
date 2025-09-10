@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Kanji Flip & Shatter</title>
+<link rel="stylesheet" href="/static/css/project.css">
+</head>
+<body>
+
+<div class="kanji-deck" id="deck">
+  <div class="kanji-card" id="kanjiCard">
+    <div class="front">開</div>
+    <div class="back">
+      <div><strong>Meaning:</strong> Open</div>
+      <div><strong>Reading:</strong> かい (kai)</div>
+      <div><strong>Example:</strong> 開ける</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const kanjiData = [
+  {front: "開", back: "<div><strong>Meaning:</strong> Open</div><div><strong>Reading:</strong> かい (kai)</div><div><strong>Example:</strong> 開ける</div>"},
+  {front: "止", back: "<div><strong>Meaning:</strong> Stop</div><div><strong>Reading:</strong> し (shi)</div><div><strong>Example:</strong> 止まる</div>"}
+];
+
+const card = document.getElementById('kanjiCard');
+const frontDiv = card.querySelector('.front');
+const backDiv = card.querySelector('.back');
+const deck = document.getElementById('deck');
+
+let index = 0;
+let flipped = false;
+
+// Create Kanji image for shatter
+function createKanjiImage(kanji) {
+  const canvas = document.createElement('canvas');
+  const scale = window.devicePixelRatio || 1;
+  canvas.width = 200 * scale;
+  canvas.height = 300 * scale;
+  const ctx = canvas.getContext('2d');
+  ctx.scale(scale, scale);
+  const gradient = ctx.createLinearGradient(0, 0, 200, 300);
+  gradient.addColorStop(0, '#cc66ff');
+  gradient.addColorStop(1, '#4d4dff');
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 0, 200, 300);
+  ctx.fillStyle = 'white';
+  ctx.font = '80px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(kanji, 100, 150);
+  return canvas.toDataURL();
+}
+
+// Shatter animation
+function shatterKanji(kanji, callback) {
+  const rect = card.getBoundingClientRect();
+  const deckRect = deck.getBoundingClientRect();
+  const pieces = [];
+  const rows = 15;
+  const cols = 15;
+  const pieceWidth = rect.width / cols;
+  const pieceHeight = rect.height / rows;
+  const kanjiImage = createKanjiImage(kanji);
+
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      const piece = document.createElement('div');
+      piece.classList.add('piece');
+      piece.style.width = pieceWidth + 'px';
+      piece.style.height = pieceHeight + 'px';
+      piece.style.left = rect.left - deckRect.left + c * pieceWidth + 'px';
+      piece.style.top = rect.top - deckRect.top + r * pieceHeight + 'px';
+      piece.style.backgroundImage = `url(${kanjiImage})`;
+      piece.style.backgroundPosition = `${-c * pieceWidth}px ${-r * pieceHeight}px`;
+      deck.appendChild(piece);
+      pieces.push(piece);
+    }
+  }
+
+  requestAnimationFrame(() => {
+    pieces.forEach((p, i) => {
+      const angle = Math.random() * 2 * Math.PI;
+      const distance = Math.random() * 500 + 150;
+      const rotate = Math.random() * 1080 - 540;
+      const scale = Math.random() * 0.3 + 0.7;
+      const delay = i * 2;
+      setTimeout(() => {
+        p.style.transform = `translate(${Math.cos(angle)*distance}px, ${Math.sin(angle)*distance}px) rotate(${rotate}deg) scale(${scale})`;
+        p.style.opacity = 0;
+      }, delay);
+    });
+  });
+
+  setTimeout(() => {
+    pieces.forEach(p => p.remove());
+    callback();
+  }, 1200);
+}
+
+// Flip function
+function flipKanji(isClick = false) {
+  if (!flipped) {
+    if (isClick) {
+      // Shatter on click
+      shatterKanji(kanjiData[index].front, () => {
+        card.style.transform = 'rotateY(180deg)';
+        flipped = true;
+      });
+    } else {
+      card.style.transform = 'rotateY(180deg)';
+      flipped = true;
+    }
+  }
+   else {
+    index = (index + 1) % kanjiData.length;
+    frontDiv.textContent = kanjiData[index].front;
+    card.style.transform = 'rotateY(0deg)';
+    flipped = false;
+    setTimeout(() => {
+      backDiv.innerHTML = kanjiData[index].back;
+    }, 1000);
+  }
+}
+
+setInterval(() => flipKanji(false), 3000);
+card.addEventListener('click', () => flipKanji(true));
+</script>
+
+</body>
+</html>

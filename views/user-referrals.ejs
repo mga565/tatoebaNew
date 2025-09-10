@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Anki Go - User - Referrals</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO -->
+  <meta name="description" content="Anki Go - AI-powered flashcard platform for students and learners.">
+  <meta name="author" content="Iced Coffee">
+
+  <!-- Performance: Preconnect -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+
+  <!-- Progressive Web App -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="Anki Go">
+  <meta name="theme-color" content="#000">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Anki Go">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+  <!-- Bootswatch Minty Theme (Bootstrap 5) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3/dist/minty/bootstrap.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+
+  <!-- Custom styles -->
+  <link href="/static/css/project.css" rel="stylesheet">
+
+  <style>
+    .dashboard-wrapper {
+      display: flex;
+      margin-top: 56px; /* Height of fixed navbar */
+    }
+    .sidebar {
+      width: 250px;
+      flex-shrink: 0;
+      height: calc(100vh - 56px); /* Full height minus navbar */
+      background-color: var(--purple-50);
+      padding: 20px;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+      overflow-y: auto;
+    }
+    .main-content {
+      flex-grow: 1;
+      padding: 20px;
+      background-color: #f8f9fa;
+      overflow-y: auto;
+      height: calc(100vh - 56px);
+    }
+    .sidebar-link {
+      display: block;
+      padding: 10px 15px;
+      color: var(--purple-700);
+      text-decoration: none;
+      border-radius: 5px;
+      margin-bottom: 5px;
+    }
+    .sidebar-link:hover {
+      background-color: var(--purple-100);
+      color: var(--purple-900);
+    }
+    .sidebar-heading {
+      color: var(--purple-900);
+      font-weight: bold;
+      margin-top: 20px;
+      margin-bottom: 10px;
+      padding: 0 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-md navbar-light fixed-top bg-primary-subtle">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand fw-bold" href="/dashboard">Anki Go Dashboard</a>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item dropdown me-2">
+            <a class="nav-link dropdown-toggle" href="#" id="bd-theme" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-circle-half"></i>
+              <span class="visually-hidden">Toggle theme</span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="bd-theme">
+              <li><button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light"><i class="bi bi-sun-fill"></i><span class="ms-2">Light</span></button></li>
+              <li><button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark"><i class="bi bi-moon-stars-fill"></i><span class="ms-2">Dark</span></button></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a href="/" class="btn btn-outline-info fw-bold me-2">View Site</a></li>
+          <li class="nav-item"><a href="/logout" class="btn btn-primary fw-bold">Logout</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="dashboard-wrapper">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <h3 class="sidebar-heading">User Menu</h3>
+      <a href="/dashboard/subscription-history" class="sidebar-link">Subscription History</a>
+      <a href="/dashboard/messages" class="sidebar-link">Messages</a>
+      <a href="/dashboard/profile" class="sidebar-link">Edit Profile</a>
+      <a href="/dashboard/billing" class="sidebar-link">Set Up Billing</a>
+      <a href="/dashboard/referrals" class="sidebar-link">My Referrals</a>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <h1>My Referrals</h1>
+      <p>View the status of your referrals and earned commissions here.</p>
+      <!-- Referrals content will go here -->
+    </main>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.min.js" defer></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <script>
+    function initializeColorModeToggler() {
+      const root = document.documentElement;
+      const storageKey = 'theme';
+      const getStored = () => localStorage.getItem(storageKey);
+      const setStored = val => localStorage.setItem(storageKey, val);
+      const getPreferred = () => {
+        const stored = getStored();
+        if (stored === 'light' || stored === 'dark') return stored;
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      };
+      const applyTheme = theme => { root.setAttribute('data-bs-theme', theme); setStored(theme); };
+      applyTheme(getPreferred());
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => { if (!getStored()) applyTheme(e.matches ? 'dark' : 'light'); });
+      document.querySelectorAll('[data-bs-theme-value]').forEach(btn => { btn.addEventListener('click', () => applyTheme(btn.getAttribute('data-bs-theme-value'))); });
+    }
+    window.addEventListener('DOMContentLoaded', initializeColorModeToggler);
+  </script>
+
+</body>
+</html>

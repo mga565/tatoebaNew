@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Anki Go - Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO -->
+  <meta name="description" content="Anki Go - AI-powered flashcard platform for students and learners.">
+  <meta name="author" content="Iced Coffee">
+
+  <!-- Performance: Preconnect -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+
+  <!-- Progressive Web App -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="Anki Go">
+  <meta name="theme-color" content="#000">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Anki Go">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+  <!-- Bootswatch Minty Theme (Bootstrap 5) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3/dist/minty/bootstrap.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+
+  <!-- Custom styles -->
+  <link href="/static/css/project.5da0e0808ead.css" rel="stylesheet">
+  <link href="/public/static/css/styles.css" rel="stylesheet">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-md navbar-light fixed-top bg-primary-subtle">
+    <div class="container-fluid">
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <a class="navbar-brand fw-bold" href="/">
+        Anki Go
+      </a>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link fw-bold" href="./index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link fw-bold" href="./create-deck.html">Create a Deck</a></li>
+          <li class="nav-item"><a class="nav-link fw-bold" href="/anki-decks/shared/">My Decks</a></li>
+        </ul>
+
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item dropdown me-2">
+            <a class="nav-link dropdown-toggle" href="#" id="bd-theme" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-circle-half"></i>
+              <span class="visually-hidden">Toggle theme</span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="bd-theme">
+              <li><button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light"><i class="bi bi-sun-fill"></i><span class="ms-2">Light</span></button></li>
+              <li><button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark"><i class="bi bi-moon-stars-fill"></i><span class="ms-2">Dark</span></button></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a href="./log-in.html" class="btn btn-outline-info fw-bold me-2">Log in</a></li>
+          <li class="nav-item"><a href="./sign-up.html" class="btn btn-primary fw-bold">Sign up</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- PAGE CONTENT -->
+<div class="container fullscreen-center">
+  <h1 class="text-primary fw-bold">Welcome to Anki Go</h1>
+  <p class="lead">Your AI-powered flashcard generator for faster, smarter learning.</p>
+</div>
+
+
+<div class="container">
+
+<!-- Step 1 -->
+<section class="step-section">
+  <div class="kanji-deck">
+    <div class="kanji-card kanji-card-flip" id="kanjiCard">
+      <div class="front">開</div>
+      <div class="back">
+        <div><strong>Meaning:</strong> Open</div>
+        <div><strong>Reading:</strong> かい (kai)</div>
+        <div><strong>Example:</strong> 開ける</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="step-text">
+    <h2>Step 1: Create Your Deck</h2>
+    <p>
+      Start by creating your own Kanji deck. Add your favorite Kanji characters and
+      their meanings. This deck will serve as your personalized flashcard collection
+      that you can review anytime. Watch the animated deck on the left for inspiration!
+    </p>
+  </div>
+</section>
+
+<!-- Step 2 -->
+<section class="step-section">
+  <!-- Left column: Kanji animation -->
+  <div class="kanji-deck" id="deck2">
+    <div class="kanji-card kanji-card-shatter" id="kanjiCard2" >止</div>
+  </div>
+
+  <!-- Right column: Text + Illustration -->
+  <div class="step-text">
+    <h2>Step 2: Smash the Kanji</h2>
+    <p>
+      Click on the Kanji card to see the futuristic glass shatter animation. Each click breaks the Kanji into shards with glowing effects, giving a sense of interactive learning and excitement!
+    </p>
+    <div class="card shadow-lg border-0 rounded-4 overflow-hidden mt-3">
+      <img src="./images/practice-deck.png" class="card-img-top" alt="Practice deck illustration">
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+  <!-- Step 3 -->
+  <section class="step-section">
+    <div>
+      <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+        <img src="./images/practice-deck.png" class="card-img-top" alt="Practice deck illustration">
+      </div>
+    </div>
+    <div>
+      <h2 class="fw-bold text-primary mb-3">Step 3: Practice and Learn</h2>
+      <p class="lead text-secondary">
+        Start reviewing your cards, track your progress, and improve daily. Retain knowledge faster and smarter.
+      </p>
+    </div>
+  </section>
+
+</div>
+
+
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.min.js" defer></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="/public/static/js/scripts.js" defer></script>
+
+</body>
+
+</html>

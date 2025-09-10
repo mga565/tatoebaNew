@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<title>JLPT N5 Vocabulary Flashcards (100 words)</title>
+<style>
+  body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f0f4f8;
+  color: #333;
+}
+  canvas {
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  margin-bottom: 15px;
+  background-color: #fff8dc; /* keep your light background */
+  transition: transform 0.3s ease;
+}
+canvas:hover {
+  transform: scale(1.03);
+}
+ button {
+  font-size: 16px;
+  margin: 0 8px 10px 8px;
+  padding: 10px 22px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #6b8ce3, #88b4f5);
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 4px 8px rgba(104, 131, 231, 0.5);
+  cursor: pointer;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+  user-select: none;
+}
+
+
+button:hover {
+  background: linear-gradient(135deg, #5175d9, #6a98ea);
+  box-shadow: 0 6px 12px rgba(81, 117, 217, 0.7);
+}
+
+button:active {
+  transform: translateY(2px);
+  box-shadow: 0 3px 6px rgba(81, 117, 217, 0.5);
+}
+
+  #counter, #knowCounter, #dontKnowCounter {
+  font-weight: 700;
+  font-size: 18px;
+  margin: 6px 0;
+  color: #555;
+  user-select: none;
+  text-align: center;
+  width: 450px;
+  background: #e3e9f7;
+  border-radius: 8px;
+  padding: 6px 0;
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.8);
+}
+
+</style>
+</head>
+<body>
+
+<div id="counter">Card 1 / 100</div>
+<div id="knowCounter">Known: 0</div>
+<div id="dontKnowCounter">Unknown: 0</div>
+
+<canvas id="flashcard" width="585" height="280"></canvas>
+
+<div>
+  <button id="prevBtn">Previous</button>
+  <button id="flipBtn">Flip</button>
+  <button id="nextBtn">Next</button>
+</div>
+<div style="margin-top:10px;">
+  <button id="knowBtn">I Know</button>
+  <button id="dontKnowBtn">I Don't Know</button>
+  <button id="resetBtn" style="background:#888; margin-left:20px;">Reset</button>
+  <button id="unknownOnlyBtn">Unknown Only</button>
+</div>
+
+
+
+
+<script>
+const vocab = [
+  { word: "学生", sentence: "私は学生です。", meaning: "がくせい\nStudent\nI am a student." },
+  { word: "先生", sentence: "先生は教室にいます。", meaning: "せんせい\nTeacher\nThe teacher is in the classroom." },
+  { word: "学校", sentence: "学校へ行きます。", meaning: "がっこう\nSchool\nI go to school." },
+  { word: "本", sentence: "本を読みます。", meaning: "ほん\nBook\nI read a book." },
+  { word: "車", sentence: "車があります。", meaning: "くるま\nCar\nThere is a car." },
+  { word: "猫", sentence: "猫が好きです。", meaning: "ねこ\nCat\nI like cats." },
+  { word: "犬", sentence: "犬はかわいいです。", meaning: "いぬ\nDog\nDogs are cute." },
+  { word: "水", sentence: "水を飲みます。", meaning: "みず\nWater\nI drink water." },
+  { word: "食べる", sentence: "りんごを食べます。", meaning: "たべる\nTo eat\nI eat an apple." },
+  { word: "飲む", sentence: "お茶を飲みます。", meaning: "のむ\nTo drink\nI drink tea." },
+  { word: "行く", sentence: "学校に行きます。", meaning: "いく\nTo go\nI go to school." },
+  { word: "来る", sentence: "友達が来ます。", meaning: "くる\nTo come\nA friend comes." },
+  { word: "見る", sentence: "テレビを見ます。", meaning: "みる\nTo see, watch\nI watch TV." },
+  { word: "話す", sentence: "日本語を話します。", meaning: "はなす\nTo speak\nI speak Japanese." },
+  { word: "買う", sentence: "本を買います。", meaning: "かう\nTo buy\nI buy a book." },
+  { word: "飲み物", sentence: "飲み物をください。", meaning: "のみもの\nDrink (noun)\nPlease give me a drink." },
+  { word: "昼ご飯", sentence: "昼ご飯を食べます。", meaning: "ひるごはん\nLunch\nI eat lunch." },
+  { word: "朝", sentence: "朝は早いです。", meaning: "あさ\nMorning\nMorning is early." },
+  { word: "晩ご飯", sentence: "晩ご飯を作ります。", meaning: "ばんごはん\nDinner\nI make dinner." },
+  { word: "今", sentence: "今は忙しいです。", meaning: "いま\nNow\nI am busy now." },
+  { word: "時間", sentence: "時間があります。", meaning: "じかん\nTime\nI have time." },
+  { word: "友達", sentence: "友達と遊びます。", meaning: "ともだち\nFriend\nI play with friends." },
+  { word: "家", sentence: "家に帰ります。", meaning: "いえ\nHouse, home\nI return home." },
+  { word: "父", sentence: "父は仕事に行きます。", meaning: "ちち\nFather\nMy father goes to work." },
+  { word: "母", sentence: "母は料理が上手です。", meaning: "はは\nMother\nMy mother is good at cooking." },
+  { word: "兄", sentence: "兄は大学生です。", meaning: "あに\nOlder brother\nMy older brother is a university student." },
+  { word: "弟", sentence: "弟は小学生です。", meaning: "おとうと\nYounger brother\nMy younger brother is an elementary student." },
+  { word: "姉", sentence: "姉は会社員です。", meaning: "あね\nOlder sister\nMy older sister is an office worker." },
+  { word: "妹", sentence: "妹は中学生です。", meaning: "いもうと\nYounger sister\nMy younger sister is a middle school student." },
+  { word: "天気", sentence: "今日の天気はいいです。", meaning: "てんき\nWeather\nToday's weather is good." },
+  { word: "雨", sentence: "雨が降っています。", meaning: "あめ\nRain\nIt is raining." },
+  { word: "暑い", sentence: "今日は暑いです。", meaning: "あつい\nHot\nIt is hot today." },
+  { word: "寒い", sentence: "冬は寒いです。", meaning: "さむい\nCold\nWinter is cold." },
+  { word: "高い", sentence: "この店は高いです。", meaning: "たかい\nExpensive, tall\nThis shop is expensive." },
+  { word: "安い", sentence: "リンゴは安いです。", meaning: "やすい\nCheap\nApples are cheap." },
+  { word: "大きい", sentence: "あの家は大きいです。", meaning: "おおきい\nBig\nThat house is big." },
+  { word: "小さい", sentence: "この犬は小さいです。", meaning: "ちいさい\nSmall\nThis dog is small." },
+  { word: "新しい", sentence: "新しい車を買いました。", meaning: "あたらしい\nNew\nI bought a new car." },
+  { word: "古い", sentence: "古い本を読みます。", meaning: "ふるい\nOld\nI read an old book." },
+  { word: "好き", sentence: "音楽が好きです。", meaning: "すき\nLike\nI like music." },
+  { word: "嫌い", sentence: "納豆が嫌いです。", meaning: "きらい\nDislike\nI dislike natto." },
+  { word: "上手", sentence: "彼は日本語が上手です。", meaning: "じょうず\nSkilled\nHe is good at Japanese." },
+  { word: "下手", sentence: "私は歌が下手です。", meaning: "へた\nUnskilled\nI am bad at singing." },
+  { word: "早い", sentence: "朝は早く起きます。", meaning: "はやい\nEarly, fast\nI get up early in the morning." },
+  { word: "遅い", sentence: "電車が遅いです。", meaning: "おそい\nLate, slow\nThe train is late." },
+  { word: "美味しい", sentence: "この料理は美味しいです。", meaning: "おいしい\nDelicious\nThis food is delicious." },
+  { word: "飲みます", sentence: "水を飲みます。", meaning: "のみます\nTo drink\nI drink water." },
+  { word: "行きます", sentence: "学校に行きます。", meaning: "いきます\nTo go\nI go to school." },
+  { word: "来ます", sentence: "友達が来ます。", meaning: "きます\nTo come\nA friend comes." },
+  { word: "見ます", sentence: "映画を見ます。", meaning: "みます\nTo see, watch\nI watch a movie." },
+  { word: "話します", sentence: "日本語を話します。", meaning: "はなします\nTo speak\nI speak Japanese." },
+  { word: "書きます", sentence: "手紙を書きます。", meaning: "かきます\nTo write\nI write a letter." },
+  { word: "読みます", sentence: "本を読みます。", meaning: "よみます\nTo read\nI read a book." },
+  { word: "買います", sentence: "パンを買います。", meaning: "かいます\nTo buy\nI buy bread." },
+  { word: "します", sentence: "勉強をします。", meaning: "します\nTo do\nI study." },
+  { word: "食べます", sentence: "ご飯を食べます。", meaning: "たべます\nTo eat\nI eat rice." },
+  { word: "休みます", sentence: "学校を休みます。", meaning: "やすみます\nTo rest, take a day off\nI take a day off school." },
+  { word: "話", sentence: "いい話ですね。", meaning: "はなし\nTalk, story\nThat's a good story." },
+  { word: "店", sentence: "新しい店があります。", meaning: "みせ\nShop, store\nThere is a new store." },
+  { word: "駅", sentence: "駅に着きました。", meaning: "えき\nStation\nI arrived at the station." },
+  { word: "空", sentence: "空が青いです。", meaning: "そら\nSky\nThe sky is blue." },
+  { word: "道", sentence: "道を教えてください。", meaning: "みち\nRoad, way\nPlease tell me the way." },
+  { word: "昼", sentence: "昼ご飯を食べます。", meaning: "ひる\nNoon, lunch\nI eat lunch." },
+  { word: "夜", sentence: "夜は寒いです。", meaning: "よる\nNight\nIt is cold at night." },
+  { word: "外", sentence: "外で遊びます。", meaning: "そと\nOutside\nI play outside." },
+  { word: "中", sentence: "部屋の中にいます。", meaning: "なか\nInside\nI am inside the room." },
+  { word: "上", sentence: "机の上に本があります。", meaning: "うえ\nAbove, on\nThere is a book on the desk." },
+  { word: "下", sentence: "椅子の下に猫がいます。", meaning: "した\nBelow, under\nThere is a cat under the chair." },
+  { word: "右", sentence: "右に曲がってください。", meaning: "みぎ\nRight\nPlease turn right." },
+  { word: "左", sentence: "左に行きます。", meaning: "ひだり\nLeft\nI go left." },
+  { word: "新幹線", sentence: "新幹線に乗ります。", meaning: "しんかんせん\nBullet train\nI ride the bullet train." },
+  { word: "電話", sentence: "電話をかけます。", meaning: "でんわ\nTelephone\nI make a phone call." },
+  { word: "本屋", sentence: "本屋で本を買います。", meaning: "ほんや\nBookstore\nI buy books at the bookstore." },
+  { word: "病院", sentence: "病院に行きます。", meaning: "びょういん\nHospital\nI go to the hospital." },
+  { word: "銀行", sentence: "銀行でお金をおろします。", meaning: "ぎんこう\nBank\nI withdraw money at the bank." },
+  { word: "郵便局", sentence: "郵便局で手紙を出します。", meaning: "ゆうびんきょく\nPost office\nI send a letter at the post office." },
+  { word: "空港", sentence: "空港へ行きます。", meaning: "くうこう\nAirport\nI go to the airport." },
+  { word: "時計", sentence: "時計を見ます。", meaning: "とけい\nClock, watch\nI look at the clock." },
+  { word: "花", sentence: "花がきれいです。", meaning: "はな\nFlower\nThe flower is beautiful." },
+  { word: "山", sentence: "山に登ります。", meaning: "やま\nMountain\nI climb a mountain." },
+  { word: "川", sentence: "川で泳ぎます。", meaning: "かわ\nRiver\nI swim in the river." },
+  { word: "海", sentence: "海に行きます。", meaning: "うみ\nSea, ocean\nI go to the sea." },
+  { word: "魚", sentence: "魚を食べます。", meaning: "さかな\nFish\nI eat fish." },
+  { word: "鳥", sentence: "鳥が飛んでいます。", meaning: "とり\nBird\nThe bird is flying." },
+  { word: "店員", sentence: "店員に聞きます。", meaning: "てんいん\nShop clerk\nI ask the clerk." },
+  { word: "旅行", sentence: "旅行に行きます。", meaning: "りょこう\nTravel\nI go on a trip." },
+  { word: "勉強", sentence: "日本語を勉強します。", meaning: "べんきょう\nStudy\nI study Japanese." },
+  { word: "仕事", sentence: "仕事に行きます。", meaning: "しごと\nWork, job\nI go to work." },
+  { word: "遊ぶ", sentence: "公園で遊びます。", meaning: "あそぶ\nTo play\nI play at the park." },
+  { word: "寝る", sentence: "早く寝ます。", meaning: "ねる\nTo sleep\nI go to bed early." },
+  { word: "起きる", sentence: "朝6時に起きます。", meaning: "おきる\nTo wake up\nI wake up at 6 a.m." }
+];
+
+const canvas = document.getElementById("flashcard");
+const ctx = canvas.getContext("2d");
+
+const counter = document.getElementById("counter");
+const knowCounter = document.getElementById("knowCounter");
+const dontKnowCounter = document.getElementById("dontKnowCounter");
+
+let currentIndex = 0;
+let showingFront = true;
+let showingUnknownOnly = false;
+let unknownIndexes = [];
+
+
+// Try loading saved status from localStorage
+let cardStatus = JSON.parse(localStorage.getItem("cardStatus"));
+if (!Array.isArray(cardStatus) || cardStatus.length !== vocab.length) {
+  cardStatus = new Array(vocab.length).fill(null);
+}
+
+function saveStatus() {
+  localStorage.setItem("cardStatus", JSON.stringify(cardStatus));
+}
+
+function updateCounters() {
+  const knownCount = cardStatus.filter(status => status === 'known').length;
+  const unknownCount = cardStatus.filter(status => status === 'unknown').length;
+  knowCounter.textContent = `Known: ${knownCount}`;
+  dontKnowCounter.textContent = `Unknown: ${unknownCount}`;
+}
+function updateUnknownIndexes() {
+  unknownIndexes = [];
+  cardStatus.forEach((status, idx) => {
+    if (status === 'unknown') unknownIndexes.push(idx);
+  });
+}
+
+
+function drawCard() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Set background color based on card status
+  let bgColor = "#FFF8DC"; // default light background
+  if (cardStatus[currentIndex] === 'known') {
+    bgColor = "lightgreen"; // soft green
+  } else if (cardStatus[currentIndex] === 'unknown') {
+    bgColor = "#EE4B2B"; // soft red
+  }
+  
+  ctx.fillStyle = bgColor;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  ctx.strokeStyle = "#000000";
+  ctx.lineWidth = 3;
+  ctx.strokeRect(10, 10, canvas.width - 20, canvas.height - 20);
+
+  ctx.fillStyle = "#000";
+  ctx.textAlign = "center";
+
+  if (showingFront) {
+    ctx.font = "36px 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
+    ctx.fillText(vocab[currentIndex].word, canvas.width / 2, 70);
+
+    ctx.font = "26px 'Segoe UI'";
+    wrapText(ctx, vocab[currentIndex].sentence, canvas.width / 2, 210, canvas.width - 40, 25);
+  } else {
+    ctx.font = "31px 'Segoe UI'";
+    const lines = vocab[currentIndex].meaning.split('\n');
+    for(let i = 0; i < lines.length; i++) {
+      ctx.fillText(lines[i], canvas.width / 2, 70 + i * 70);
+    }
+  }
+
+  if (showingUnknownOnly) {
+  counter.textContent = `Unknown Card ${unknownIndexes.indexOf(currentIndex) + 1} / ${unknownIndexes.length}`;
+} else {
+  counter.textContent = `Card ${currentIndex + 1} / ${vocab.length}`;
+}
+
+}
+
+// Reset function
+function resetAll() {
+  cardStatus = new Array(vocab.length).fill(null);
+  saveStatus();
+  updateCounters();
+  drawCard();
+}
+
+document.getElementById("resetBtn").addEventListener("click", resetAll);
+
+
+function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+  const words = text.split(' ');
+  let line = '';
+  let lines = [];
+  for(let n = 0; n < words.length; n++) {
+    const testLine = line + words[n] + ' ';
+    const metrics = ctx.measureText(testLine);
+    const testWidth = metrics.width;
+    if(testWidth > maxWidth && n > 0) {
+      lines.push(line);
+      line = words[n] + ' ';
+    } else {
+      line = testLine;
+    }
+  }
+  lines.push(line);
+  for(let i = 0; i < lines.length; i++) {
+    ctx.fillText(lines[i].trim(), x, y + i * lineHeight);
+  }
+  return lines.length;
+}
+
+function flipCard() {
+  showingFront = !showingFront;
+  drawCard();
+}
+
+function nextCard() {
+  if (showingUnknownOnly) {
+    if (unknownIndexes.length === 0) return; // no unknown cards
+    let pos = unknownIndexes.indexOf(currentIndex);
+    pos = (pos + 1) % unknownIndexes.length;
+    currentIndex = unknownIndexes[pos];
+  } else {
+    currentIndex = (currentIndex + 1) % vocab.length;
+  }
+  showingFront = true;
+  drawCard();
+}
+
+function prevCard() {
+  if (showingUnknownOnly) {
+    if (unknownIndexes.length === 0) return;
+    let pos = unknownIndexes.indexOf(currentIndex);
+    pos = (pos - 1 + unknownIndexes.length) % unknownIndexes.length;
+    currentIndex = unknownIndexes[pos];
+  } else {
+    currentIndex = (currentIndex - 1 + vocab.length) % vocab.length;
+  }
+  showingFront = true;
+  drawCard();
+}
+
+
+function markKnown() {
+  cardStatus[currentIndex] = 'known';
+  saveStatus();
+  updateCounters();
+  drawCard();  // <-- Add this line to redraw immediately
+}
+
+function markUnknown() {
+  cardStatus[currentIndex] = 'unknown';
+  saveStatus();
+  updateCounters();
+  drawCard();  // <-- Add this line to redraw immediately
+}
+
+function toggleUnknownOnly() {
+  const btn = document.getElementById("unknownOnlyBtn");
+  if (showingUnknownOnly) {
+    // Turn off filter
+    showingUnknownOnly = false;
+    currentIndex = 0;
+    btn.textContent = "Show Unknown Only";
+  } else {
+    updateUnknownIndexes();
+    showingUnknownOnly = true;
+    if (unknownIndexes.length > 0) {
+      currentIndex = unknownIndexes[0];
+      btn.textContent = "Show All Cards";
+    } else {
+      alert("No unknown cards to review!");
+      showingUnknownOnly = false;
+      return;
+    }
+  }
+  showingFront = true;
+  drawCard();
+  updateCounters();
+}
+
+
+
+canvas.addEventListener("click", flipCard);
+document.getElementById("flipBtn").addEventListener("click", flipCard);
+document.getElementById("nextBtn").addEventListener("click", nextCard);
+document.getElementById("prevBtn").addEventListener("click", prevCard);
+
+document.getElementById("knowBtn").addEventListener("click", markKnown);
+document.getElementById("dontKnowBtn").addEventListener("click", markUnknown);
+document.getElementById("unknownOnlyBtn").addEventListener("click", toggleUnknownOnly);
+
+
+updateCounters();
+drawCard();
+</script>
+
+
+</body>
+</html>
